@@ -1,0 +1,20 @@
+<body>
+
+<ul>
+  <li><a class="active" href="/">Home</a></li>
+  <li><a href="/artists">Artists</a></li>
+  <li><a href="/songs">Songs</a></li>
+</ul>
+
+</body>
+
+<div>
+<h1>Editing song</h1>
+
+<%= render 'form' %>
+
+<footer>
+<%= link_to 'Show', @song %> |
+<%= link_to 'Back', songs_path %>
+</footer>
+</div>

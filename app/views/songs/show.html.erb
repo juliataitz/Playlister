@@ -1,0 +1,30 @@
+<body>
+
+<ul>
+  <li><a class="active" href="/">Home</a></li>
+  <li><a href="/artists">Artists</a></li>
+  <li><a href="/songs">Songs</a></li>
+</ul>
+
+</body>
+
+<div>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @song.name %>
+</p>
+
+<p>
+  <strong>Artist Name:</strong>
+  <%= link_to @song.artist.name, @song.artist if @song.artist %>
+</p>
+
+<iframe src="https://embed.spotify.com/?uri=<%=@song.get_spotify_uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe></br>
+
+<footer>
+<%= link_to 'Edit', edit_song_path(@song) %> |
+<%= link_to 'Back', songs_path %>
+</footer>
+</div>
