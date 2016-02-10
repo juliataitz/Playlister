@@ -15,16 +15,12 @@ ActiveRecord::Schema.define(version: 20131105200820) do
 
   create_table "artists", force: :cascade do |t|
     t.string   "name"
-    t.string   "genre"
-    t.integer  "age"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "songs", force: :cascade do |t|
     t.string   "name"
-    t.string   "length"
-    t.string   "genre"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "artist_id"

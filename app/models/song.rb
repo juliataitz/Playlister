@@ -15,8 +15,7 @@ class Song < ActiveRecord::Base
 
   def get_spotify_uri
   	data = JSON.load(open("https://api.spotify.com/v1/search?q=#{song_search}&type=track"))
-  	uri = data["tracks"]["items"][1]["uri"]
-  	uri
+  	data["tracks"]["items"][1]["uri"]
   end
 
 end

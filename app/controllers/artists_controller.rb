@@ -26,12 +26,10 @@ class ArtistsController < ApplicationController
   def create
     @artist = Artist.new(artist_params)
 
-    # if !@artist.valid_artist_check
-    #   @artist.destroy
-    # end
-    
     respond_to do |format|
-      if @artist.save
+
+    if @artist.valid_artist_check 
+        @artist.save
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
         format.json { render :show, status: :created, location: @artist }
       else
@@ -58,6 +56,8 @@ class ArtistsController < ApplicationController
   # DELETE /artists/1
   # DELETE /artists/1.json
   def destroy
+    # @songs = Song.all.find_by(:artist_id => @artist.id)
+    # @songs.destroy
     @artist.destroy
     respond_to do |format|
       format.html { redirect_to artists_url, notice: 'Artist was successfully destroyed.' }
@@ -73,6 +73,6 @@ class ArtistsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def artist_params
-      params.require(:artist).permit(:name, :genre, :age)
+      params.require(:artist).permit(:name)
     end
 end
