@@ -15,6 +15,7 @@ class SongsController < ApplicationController
   # GET /songs/new
   def new
     @song = Song.new
+    @song.artist = Artist.new
   end
 
   # GET /songs/1/edit
@@ -24,14 +25,19 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    @song = Song.new(song_params)
-
+    # binding.pry
+    artist = Artist.find_or_create_by(name: song_params[:artist_attributes][:name])
+    @song = Song.new(name: song_params[:name])
+    @song.artist = artist
     respond_to do |format|
-      if @song.save
+
+      if @song.is_valid?
+        @song.save
+        artist.songs.append @song
         format.html { redirect_to @song, notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
-        format.html { render action: 'new' }
+        format.html { redirect_to new_song_path, notice: 'Invalid Song' }
         format.json { render json: @song.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +75,6 @@ class SongsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def song_params
-      params.require(:song).permit(:name, :artist_name, :artist_id)
+      params.require(:song).permit(:name, artist_attributes: [:name])
     end
 end

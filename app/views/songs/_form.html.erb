@@ -6,10 +6,11 @@
     <%= f.text_field :name %>
   </div>
 
-
   <div class="field">
-    <label for="song_artist_name">Artist Name</label><br>
-    <input type="text" name="song[artist_name]" id="song_artist_name">
+    <%= f.fields_for :artist_attributes do |artist| %>
+      <%= artist.label :artist_name %>
+      <%= artist.text_field :name %>
+    <% end %>
   </div>
 
   <div class="actions">

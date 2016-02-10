@@ -25,15 +25,13 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.new(artist_params)
-
     respond_to do |format|
-
-    if @artist.valid_artist_check 
+    if @artist.is_valid?
         @artist.save
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
         format.json { render :show, status: :created, location: @artist }
       else
-        format.html { render :new }
+        format.html { redirect_to new_artist_path, notice: 'Invalid Artist' }
         format.json { render json: @artist.errors, status: :unprocessable_entity }
       end
     end
