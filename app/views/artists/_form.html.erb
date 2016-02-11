@@ -17,6 +17,13 @@
     <%= f.text_area :name %>
   </div>
   
+  <div class="field">
+    <%= f.fields_for :song_attributes do |song| %>
+      <%= song.label :song_name %>
+      <%= song.text_field :name %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

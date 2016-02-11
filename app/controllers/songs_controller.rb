@@ -25,7 +25,6 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    # binding.pry
     artist = Artist.find_or_create_by(name: song_params[:artist_attributes][:name])
     @song = Song.new(name: song_params[:name])
     @song.artist = artist

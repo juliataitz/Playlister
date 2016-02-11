@@ -24,7 +24,13 @@ class ArtistsController < ApplicationController
   # POST /artists
   # POST /artists.json
   def create
-    @artist = Artist.new(artist_params)
+
+    @artist = Artist.find_or_initialize_by(name: artist_params[:name])
+    if !artist_params[:song_attributes][:name].empty?
+      song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
+      @artist.songs << song
+    end
+
     respond_to do |format|
     if @artist.is_valid?
         @artist.save
@@ -71,6 +77,6 @@ class ArtistsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def artist_params
-      params.require(:artist).permit(:name)
+      params.require(:artist).permit(:name, song_attributes: [:name])
     end
 end
