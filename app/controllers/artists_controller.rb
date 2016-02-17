@@ -30,8 +30,10 @@ class ArtistsController < ApplicationController
   def create
 
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
-    if !artist_params[:song_attributes][:name].empty?
-      song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
+    song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
+    song.artist = @artist
+
+    if song.is_valid?
       @artist.songs << song
     end
 
