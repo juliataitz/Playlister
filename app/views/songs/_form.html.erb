@@ -8,7 +8,7 @@
 
   <div class="field">
     <%= f.fields_for :artist_attributes do |artist| %>
-      <%= artist.label :artist_name %>
+      <%= artist.label :artist_name %></br>
       <%= artist.text_field :name %>
     <% end %>
   </div>

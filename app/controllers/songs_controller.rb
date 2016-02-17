@@ -46,7 +46,7 @@ class SongsController < ApplicationController
   # PATCH/PUT /songs/1.json
   def update
     respond_to do |format|
-      if @song.update(song_params)
+      if @song.update(name: song_params[:name].titleize)
         format.html { redirect_to @song, notice: 'Song was successfully updated.' }
         format.json { head :no_content }
       else

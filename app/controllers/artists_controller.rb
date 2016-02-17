@@ -10,6 +10,10 @@ class ArtistsController < ApplicationController
   # GET /artists/1
   # GET /artists/1.json
   def show
+    # @artist = Artist.find_by(name: artist_params[:name])
+    # song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
+    # @artist.songs << song
+    # @artist.save
   end
 
   # GET /artists/new
@@ -47,7 +51,12 @@ class ArtistsController < ApplicationController
   # PATCH/PUT /artists/1.json
   def update
     respond_to do |format|
-      if @artist.update(artist_params)
+      if @artist.update(name: artist_params[:name].titleize)
+
+        @artist.songs.each do |song|
+          song.artist.update(name: @artist.name.titleize)
+        end
+
         format.html { redirect_to @artist, notice: 'Artist was successfully updated.' }
         format.json { render :show, status: :ok, location: @artist }
       else

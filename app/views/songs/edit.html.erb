@@ -1,7 +1,21 @@
 <div>
 <h1>Editing song</h1>
 
-<%= render 'form' %>
+<%#= render 'form' %>
+
+<div>
+<%= form_for(@song) do |f| %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+</div>
 
 <footer>
 <%= link_to 'Show', @song %> |

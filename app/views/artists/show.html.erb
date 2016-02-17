@@ -9,11 +9,11 @@
 <p>
 	<strong>Songs:</strong></br>
 	<div id="multiColumn">
-	<ol>
-	<% @artist.songs.each do |song| %>
-	<iframe src="https://embed.spotify.com/?uri=<%=song.get_spotify_uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe></br> 
-	<% end %>
-	</ol>
+		<ol>
+			<% @artist.songs.each do |song| %>
+				<iframe src="https://embed.spotify.com/?uri=<%=song.get_spotify_uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe></br> 
+			<% end %>
+		</ol>
 	</div>
 </p></br>
 

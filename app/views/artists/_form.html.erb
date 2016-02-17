@@ -19,7 +19,7 @@
   
   <div class="field">
     <%= f.fields_for :song_attributes do |song| %>
-      <%= song.label :song_name %>
+      <%= song.label :song_name %></br>
       <%= song.text_field :name %>
     <% end %>
   </div>
