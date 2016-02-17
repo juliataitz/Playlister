@@ -1,17 +1,17 @@
 <div>
-<%= form_for(@song) do |f| %>
+<%= form_for([@song.artist, @song]) do |f| %>
 
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= f.fields_for :artist_attributes do |artist| %>
-      <%= artist.label :artist_name %></br>
-      <%= artist.text_field :name %>
-    <% end %>
-  </div>
+<!--   <div class="field">
+    <%#= f.fields_for :artist_attributes do |artist| %>
+      <%#= artist.label :artist_name %></br>
+      <%#= artist.text_field :name %>
+    <%# end %>
+  </div> -->
 
   <div class="actions">
     <%= f.submit %>

@@ -2,7 +2,7 @@ class Song < ActiveRecord::Base
   belongs_to :artist
 
   def song_search
-  	self.name.split(' ').join('+') + '+' + self.artist.name.split(' ').join('+')
+  	"#{name.split(' ').join('+')}+#{artist.name.split(' ').join('+')}"
   end
 
   def get_spotify_uri

@@ -1,6 +1,10 @@
 class SongsController < ApplicationController
   before_action :set_song, only: [:show, :edit, :update, :destroy]
 
+  def all
+    @songs = Song.all
+  end
+
   # GET /songs
   # GET /songs.json
   def index
@@ -15,7 +19,7 @@ class SongsController < ApplicationController
   # GET /songs/new
   def new
     @song = Song.new
-    @song.artist = Artist.new
+    @song.artist = Artist.find(params[:artist_id])
   end
 
   # GET /songs/1/edit
@@ -25,16 +29,15 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    artist = Artist.find_or_create_by(name: song_params[:artist_attributes][:name])
+    artist = Artist.find_or_create_by(id: params[:artist_id])
     @song = Song.new(name: song_params[:name])
     @song.artist = artist
-
     respond_to do |format|
 
       if @song.is_valid?
         @song.save
         artist.songs.append @song
-        format.html { redirect_to @song, notice: 'Song was successfully created.' }
+        format.html { redirect_to artist_songs_path(artist.id), notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
         @song.artist.destroy
@@ -76,6 +79,6 @@ class SongsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def song_params
-      params.require(:song).permit(:name, artist_attributes: [:name])
+      params.require(:song).permit(:name)
     end
 end

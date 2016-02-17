@@ -2,7 +2,7 @@ class Artist < ActiveRecord::Base
   has_many :songs, dependent: :destroy
 
   def artist_search
-  	self.name.split(' ').join('+')
+  	name.split(' ').join('+')
   end
 
   def is_valid?

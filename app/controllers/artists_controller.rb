@@ -10,10 +10,6 @@ class ArtistsController < ApplicationController
   # GET /artists/1
   # GET /artists/1.json
   def show
-    # @artist = Artist.find_by(name: artist_params[:name])
-    # song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
-    # @artist.songs << song
-    # @artist.save
   end
 
   # GET /artists/new
@@ -28,14 +24,11 @@ class ArtistsController < ApplicationController
   # POST /artists
   # POST /artists.json
   def create
-
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
     song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
     song.artist = @artist
 
-    if song.is_valid?
-      @artist.songs << song
-    end
+    @artist.songs << song if song.is_valid?
 
     respond_to do |format|
     if @artist.is_valid?

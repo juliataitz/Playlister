@@ -1,9 +1,10 @@
 PlaylisterApp::Application.routes.draw do
 
-  resources :artists
+  resources :artists do 
+    resources :songs
+  end 
 
-  resources :songs
-
+  get '/songs', to: 'songs#all'
   root 'static_pages#home'
 
   # The priority is based upon order of creation: first created -> highest priority.
