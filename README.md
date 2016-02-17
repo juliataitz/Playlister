@@ -22,9 +22,17 @@ Artist should be instantiated by being passed a name. Make reader methods for na
 #### is_valid?
 `Artist` should also have a method named `valid_artist` that will check for a valid artist. An artist is valid if an artist has items in the Spotify API. You should use the artist search to check the Spotify API.
 
+#### artist_search
+'Artist' should have a method named 'artist_search' that will format an artist name so that it can be used with the Spotify URI. You need to look at the Spotify API and see how it wants strings formatted.
+
 ### song.rb
 Song should be instantiated by being passed a name. Make reader methods for name. Song should have validate the song name using the Spotify API. If the song is not valid, an error should be thrown before the artist is saved. The song should belong to an artist. A song should validate the artist name before being created. When a song is destroyed, the artist it belongs to should not be destroyed. 
 
 #### is_valid?
 `Song` should also have a method named `valid_song` that will check for a valid song. A song is valid if a song has items in the Spotify API. You should use the track search to check the Spotify API.
 
+#### song_search
+'Song' should have a method named 'song_search' that will format an artist name so that it can be used with the Spotify URI. You need to look at the Spotify API and see how it wants strings formatted.
+
+#### get_spotify_uri
+'Song' should have a method 'get_spotify_uri' that will use the return value from 'song_search' and properly parse through the JSON from Spotify. You will want to get the song information by using the type track and pulling the first URI from the first item.

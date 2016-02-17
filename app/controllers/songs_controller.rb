@@ -28,6 +28,7 @@ class SongsController < ApplicationController
     artist = Artist.find_or_create_by(name: song_params[:artist_attributes][:name])
     @song = Song.new(name: song_params[:name])
     @song.artist = artist
+
     respond_to do |format|
 
       if @song.is_valid?
@@ -36,6 +37,7 @@ class SongsController < ApplicationController
         format.html { redirect_to @song, notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
+        @song.artist.destroy
         format.html { redirect_to new_song_path, notice: 'Invalid Song' }
         format.json { render json: @song.errors, status: :unprocessable_entity }
       end
