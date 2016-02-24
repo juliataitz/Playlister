@@ -1,7 +1,7 @@
 PlaylisterApp::Application.routes.draw do
 
-  resources :artists, except: :edit do 
-    resources :songs, except: :edit
+  resources :artists, :except => [:edit, :update] do 
+    resources :songs, :except => [:edit, :update]
   end 
 
   get '/songs', to: 'songs#all'

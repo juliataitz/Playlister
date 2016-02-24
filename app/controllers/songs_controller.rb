@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: [:show, :edit, :update, :destroy]
+  before_action :set_song, only: [:show, :destroy]
 
   def all
     @songs = Song.all
@@ -20,10 +20,6 @@ class SongsController < ApplicationController
   def new
     @song = Song.new
     @song.artist = Artist.find(params[:artist_id])
-  end
-
-  # GET /songs/1/edit
-  def edit
   end
 
   # POST /songs
