@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+justin_bieber = Artist.create(:name => "Justin Bieber")
+love_yourself = Song.create(:name => "Love Yourself", :artist_id => justin_bieber.id)
+baby = Song.create(:name => "Baby", :artist_id => justin_bieber.id)
+
+selena_gomez = Artist.create(:name => "Selena Gomez")
+hands_to_myself = Song.create(:name => "Hands To Myself", :artist_id => selena_gomez.id)
+
+miley_cryus = Artist.create(:name => "Miley Cyrus")

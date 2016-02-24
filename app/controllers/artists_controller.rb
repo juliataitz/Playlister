@@ -25,10 +25,12 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
-    song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
-    song.artist = @artist
-
-    @artist.songs << song if song.is_valid?
+    
+    if !@artist.songs.empty?
+      song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name]) 
+      song.artist = @artist
+      @artist.songs << song if song.is_valid?
+    end
 
     respond_to do |format|
     if @artist.is_valid?
