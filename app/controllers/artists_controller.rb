@@ -42,24 +42,6 @@ class ArtistsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /artists/1
-  # PATCH/PUT /artists/1.json
-  def update
-    respond_to do |format|
-      if @artist.update(name: artist_params[:name].titleize)
-
-        @artist.songs.each do |song|
-          song.artist.update(name: @artist.name.titleize)
-        end
-
-        format.html { redirect_to @artist, notice: 'Artist was successfully updated.' }
-        format.json { render :show, status: :ok, location: @artist }
-      else
-        format.html { render :edit }
-        format.json { render json: @artist.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /artists/1
   # DELETE /artists/1.json

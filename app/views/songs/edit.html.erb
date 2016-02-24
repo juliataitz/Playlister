@@ -1,24 +1,22 @@
 <div>
-<h1>Editing song</h1>
+	<h1>Editing song</h1>
+	
+	<div>
+	<%= form_for(@song) do |f| %>
 
-<%#= render 'form' %>
+	  <div class="field">
+	    <%= f.label :name %><br>
+	    <%= f.text_field :name %>
+	  </div>
 
-<div>
-<%= form_for(@song) do |f| %>
+	  <div class="actions">
+	    <%= f.submit %>
+	  </div>
+	<% end %>
+	</div>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-</div>
-
-<footer>
-<%= link_to 'Show', @song %> |
-<%= link_to 'Back', songs_path %>
-</footer>
+	<footer>
+	<%= link_to 'Show', @song %> |
+	<%= link_to 'Back', songs_path %>
+	</footer>
 </div>

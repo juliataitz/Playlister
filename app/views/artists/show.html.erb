@@ -1,28 +1,27 @@
 <div>
-<p id="notice"><%= notice %></p>
+	<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @artist.name %>
-</p></br>
+	<p>
+	  <strong>Name:</strong>
+	  <%= @artist.name %>
+	</p></br>
 
-<p>
-	<%= link_to 'New Song', new_artist_song_path(@artist.id) %><br>
-</p><br>
+	<p>
+		<%= link_to 'New Song', new_artist_song_path(@artist.id) %><br>
+	</p><br>
 
-<p>
-	<strong>Songs:</strong></br>
-	<div id="multiColumn">
-		<ol>
-			<% @artist.songs.each do |song| %>
-				<iframe src="https://embed.spotify.com/?uri=<%=song.get_spotify_uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe></br> 
-			<% end %>
-		</ol>
-	</div>
-</p></br>
+	<p>
+		<strong>Songs:</strong></br>
+		<div id="multiColumn">
+			<ol>
+				<% @artist.songs.each do |song| %>
+					<iframe src="https://embed.spotify.com/?uri=<%=song.get_spotify_uri%>" width="300" height="380" frameborder="0" allowtransparency="true"></iframe></br> 
+				<% end %>
+			</ol>
+		</div>
+	</p><br>
 
-<footer>
-<%= link_to 'Edit', edit_artist_path(@artist) %> |
-<%= link_to 'Back', artists_path %>
-</footer>
+	<footer>
+		<%= link_to 'Back', artists_path %>
+	</footer>
 </div>

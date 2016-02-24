@@ -47,20 +47,6 @@ class SongsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /songs/1
-  # PATCH/PUT /songs/1.json
-  def update
-    respond_to do |format|
-      if @song.update(name: song_params[:name].titleize)
-        format.html { redirect_to @song, notice: 'Song was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /songs/1
   # DELETE /songs/1.json
   def destroy
