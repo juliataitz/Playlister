@@ -5,7 +5,7 @@ permalink: /homeworks/homework8/
 ---
 
 # Homework 8: Spotify Jukebox
-Due **March 15, 2016 11:59pm**.
+Due **March 21, 2016 11:59pm**.
 
 The assignment is available for download [here](cis196_homework_8.zip).
 

@@ -1,0 +1,11 @@
+Style/TrivialAccessors:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
+Lint/HandleExceptions:
+  Enabled: false
+AllCops:
+  Exclude:
+    - 'db/schema.rb'

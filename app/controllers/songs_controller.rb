@@ -29,15 +29,13 @@ class SongsController < ApplicationController
     @song = Song.new(name: song_params[:name])
     @song.artist = artist
     respond_to do |format|
-
       if @song.is_valid?
         @song.save
         artist.songs.append @song
         format.html { redirect_to artist_songs_path(artist.id), notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
-        @song.artist.destroy
-        format.html { redirect_to new_song_path, notice: 'Invalid Song' }
+        format.html { redirect_to new_artist_song_path, notice: 'Invalid Song' }
         format.json { render json: @song.errors, status: :unprocessable_entity }
       end
     end
@@ -54,13 +52,14 @@ class SongsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_song
-      @song = Song.find(params[:id])
-    end
+ 
+  # Use callbacks to share common setup or constraints between actions.
+  def set_song
+    @song = Song.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def song_params
-      params.require(:song).permit(:name)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def song_params
+    params.require(:song).permit(:name)
+  end
 end

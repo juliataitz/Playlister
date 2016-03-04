@@ -1,9 +1,7 @@
 PlaylisterApp::Application.routes.draw do
-
-  resources :artists, :except => [:edit, :update] do 
-    resources :songs, :except => [:edit, :update]
-  end 
-
+  resources :artists, except: [:edit, :update] do
+    resources :songs, except: [:edit, :update]
+  end
   get '/songs', to: 'songs#all'
   root 'static_pages#home'
 
@@ -47,7 +45,7 @@ PlaylisterApp::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
