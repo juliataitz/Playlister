@@ -4,6 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 Bundler.require(:default, ENV['RAILS_ENV'])
 require 'webmock/rspec'
 require 'capybara/rspec'
+require 'capybara/dsl'
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -28,6 +29,8 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
+
+  config.include Capybara::DSL
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

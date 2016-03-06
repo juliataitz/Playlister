@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Artist do
   describe 'has_many songs' do
     before :each do

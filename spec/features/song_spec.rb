@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'song features' do
   describe '#new' do
     before :each do

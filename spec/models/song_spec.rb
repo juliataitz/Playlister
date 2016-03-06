@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Song do
   it 'belongs to artist' do
     song = Song.create(name: 'Love Yourself')
