@@ -1,16 +1,13 @@
+require 'spec_helper'
+
 describe 'artist features' do
   describe '#index' do
     before :each do
+      visit "/artists"
       @artist = Artist.create(name: 'Justin Bieber')
     end
 
-    it 'loads the page successfully' do
-      expect(status_code).to eql(200)
-    end
-
     it 'lists all artists' do
-      Artist.create(name: 'Justin Bieber')
-      visit '/users'
       expect(page).to have_text(@artist.name)
     end
 
@@ -18,7 +15,7 @@ describe 'artist features' do
       expect(page).to_not have_text('Edit')
     end
 
-    it 'shows Show and Destroy' do
+    it 'has Show and Destroy' do
       expect(page).to have_text('Show')
       expect(page).to have_text('Destroy')
     end
@@ -36,6 +33,8 @@ describe 'artist features' do
 
   describe '#new' do
     before :each do
+      @artist = Artist.create(name: 'Justin Bieber')
+      @song = Song.create(name: 'Baby')
       visit '/artists/new'
     end
 
@@ -53,8 +52,24 @@ describe 'artist features' do
       expect(Artist.count).to eql(1)
     end
 
-    it 'creates a new song' do
-      click_button 'Create Artist'
+    it 'can create an artist without a new song' do
+      visit 'artists/new'
+      within(all('.field').first) do
+        fill_in('Name', with: @artist.name)
+      end
+      click_button('Create Post')
+      expect(page).to have_content(@artist.name)
+    end
+
+    it 'can create an artist with a new song' do 
+      visit 'artists/new'
+      within(all('.field').first) do
+        fill_in('Name', with: @artist.name)
+      end
+      within(all('.field').last) do
+        fill_in('Name', with: @song.name)
+      end
+      click_button('Create Post')
       expect(Song.count).to eql(1)
     end
   end

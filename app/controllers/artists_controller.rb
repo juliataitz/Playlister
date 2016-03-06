@@ -21,13 +21,12 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
-
     song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
     song.artist = @artist
-    @artist.songs << song if song.is_valid?
+    @artist.songs << song if song.in_spotify?
 
     respond_to do |format|
-      if @artist.is_valid?
+      if @artist.in_spotify?
         @artist.save
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
         format.json { render :show, status: :created, location: @artist }

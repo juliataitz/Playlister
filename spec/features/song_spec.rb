@@ -1,11 +1,9 @@
+require 'spec_helper'
+
 describe 'song features' do
   describe '#new' do
     before :each do
       visit 'artists/#{artist.id}/songs/new'
-    end
-
-    it 'loads page successfully' do
-      expect(status_code).to eql(200)
     end
 
     it 'loads the correct page' do

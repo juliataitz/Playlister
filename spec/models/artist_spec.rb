@@ -4,7 +4,9 @@ describe Artist do
   describe 'has_many songs' do
     before :each do
       @artist = Artist.create(name: 'Justin Bieber')
-      @artist.songs.create name: 'Baby'
+      # @artist.songs.create name: 'Baby'
+      @song = Song.create(name: 'Baby')
+      @artist.songs.append @song
     end
 
     it 'has many songs' do
@@ -36,6 +38,7 @@ describe Artist do
       @artist = Artist.create(name: 'Justin Bieber')
       @artist.songs.create name: 'Baby'
     end
+    
     it 'returns a properly formatted artist name for the uri' do
       expect(@artist.artist_search).to eq('Justin+Bieber')
     end

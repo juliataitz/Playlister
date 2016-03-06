@@ -27,19 +27,19 @@ You will create models form `Artist` and `Song`. These models will have basic va
 For this homework, we will being using the Spotify API. Spotify provides us with JSON data to access and embedded all songs and artists within its library. Before you start this assignment, familiarize yourself with the API by exploring `https://developer.spotify.com/web-api/get-track/`. When you want JSON for a specific artist, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+ARTIST&type=artist` where you provide the specific artist name. When you want JSON for a specific song, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+ARTIST+SOME+SONG&type=track` where you provide the specif artist name and song name.
 
 ### artist.rb
-Artist should be instantiated by being passed a name. Artist should have validated the artist name using the Spotify API with the `is_valid?` method. If the artist is not valid, an error should be thrown before the artist is saved. The artist should have many songs. When an artist is destroyed, all songs belonging to the artist should be destroyed. You should be able to create an artist with an empty song field without creating a song without a name.
+Artist should be instantiated by being passed a name. Artist should have validated the artist name using the Spotify API with the `in_spotify?` method. If the artist is not valid, an error should be thrown before the artist is saved. The artist should have many songs. When an artist is destroyed, all songs belonging to the artist should be destroyed. You should be able to create an artist with an empty song field without creating a song without a name.
 
-#### is_valid?
+#### in_spotify?
 `Artist` should also have a method named `valid_artist` that will check for a valid artist. An artist is valid if an artist has items in the Spotify API. You should use the artist search to check the Spotify API. To validate an artist, you will need to load the `JSON` from the provided link. For artists, use the type `artist` as the search field. You should interpolate the result of `artist_search` in the `search?q=` field of the url. Once you retrieve the proper `JSON`, you can validate an artist by checking if within the hash `artists`, `items` is empty. 
 
 #### artist_search
 `Artist` should have a method named `artist_search` that will format an artist name so that it can be used with the Spotify URI. Artist names should be formatted by inserting `+` instead of spaces.
 
 ### song.rb
-`Song` should be instantiated by being passed a name. Song should validate the song name using the Spotify API and the method `is_valid?`. If the song is not valid, an error should be thrown before the artist is saved. The song should belong to an artist. Since we want to make nested resouces for songs, songs should only be able to be created from an artist `show` page. When a song is destroyed, the artist it belongs to should not be destroyed. 
+`Song` should be instantiated by being passed a name. Song should validate the song name using the Spotify API and the method `in_spotify?`. If the song is not valid, an error should be thrown before the artist is saved. The song should belong to an artist. Since we want to make nested resouces for songs, songs should only be able to be created from an artist `show` page. When a song is destroyed, the artist it belongs to should not be destroyed. 
 
-#### is_valid?
-`Song` should also have a method named `is_valid?` that will check for a valid song. A song is valid if a song has items in the Spotify API. To validate an artist, you will need to load the `JSON` from the provided link. For songs, use the type `track` as the search field. You should interpolate the result from `song_search` in the `search?q=` field of the url. Once you retrieve the proper `JSON`, you can validate a song by checking if within the hash `tracks`, `items` is empty. 
+#### in_spotify?
+`Song` should also have a method named `in_spotify?` that will check for a valid song. A song is valid if a song has items in the Spotify API. To validate an artist, you will need to load the `JSON` from the provided link. For songs, use the type `track` as the search field. You should interpolate the result from `song_search` in the `search?q=` field of the url. Once you retrieve the proper `JSON`, you can validate a song by checking if within the hash `tracks`, `items` is empty. 
 
 #### song_search
 `Song` should have a method named `song_search` that will format an artist name so that it can be used with the Spotify URI. Song names and artist name should be formatted by inserting `+` instead of spaces.

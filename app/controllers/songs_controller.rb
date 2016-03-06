@@ -29,7 +29,7 @@ class SongsController < ApplicationController
     @song = Song.new(name: song_params[:name])
     @song.artist = artist
     respond_to do |format|
-      if @song.is_valid?
+      if @song.in_spotify?
         @song.save
         artist.songs.append @song
         format.html { redirect_to artist_songs_path(artist.id), notice: 'Song was successfully created.' }
@@ -52,7 +52,7 @@ class SongsController < ApplicationController
   end
 
   private
- 
+
   # Use callbacks to share common setup or constraints between actions.
   def set_song
     @song = Song.find(params[:id])

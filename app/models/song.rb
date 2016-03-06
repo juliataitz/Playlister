@@ -10,7 +10,7 @@ class Song < ActiveRecord::Base
     data['tracks']['items'][1]['uri']
   end
 
-  def is_valid?
+  def in_spotify?
     return false if name.empty?
     data = JSON.load(open("https://api.spotify.com/v1/search?q=#{song_search}&type=track"))
     song_data = data['tracks']
