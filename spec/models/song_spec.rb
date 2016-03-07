@@ -18,13 +18,10 @@ describe Song do
   end
 
   describe '#song_search' do
-    before :each do
+    it 'returns a properly formatted artist name for the uri' do
       @song = Song.create(name: 'Love Yourself')
       @artist = Artist.create(name: 'Justin Bieber')
       @artist.songs.append @song
-    end
-
-    it 'returns a properly formatted artist name for the uri' do
       expect(@song.song_search).to eq('Love+Yourself+Justin+Bieber')
     end
   end
@@ -59,5 +56,7 @@ describe Song do
       @artist.songs.append @song
       expect(@song.spotify_uri).to eql('spotify:track:2p7Qt540YPkuXasIaJ6Q4p')
     end
+    
+    #it returns an error with an invalid song - return nil
   end
 end

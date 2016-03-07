@@ -14,7 +14,6 @@ describe 'artist features' do
     end
 
     it 'lists all artists' do
-      visit '/artists'
       expect(page).to have_text(@artist.name)
     end
 
@@ -32,7 +31,7 @@ describe 'artist features' do
       expect(current_path).to eql("/artists/#{@artist.id}")
     end
 
-    it 'links to the destroy page' do
+    it 'destroy redirects to index' do
       click_link 'Destroy'
       expect(current_path).to eql('/artists')
     end
@@ -57,12 +56,12 @@ describe 'artist features' do
     end
 
     it 'can create an artist without a new song' do
-      within(all('.field').first) do
-        fill_in('Name', with: @artist.name)
-      end
+      fill_in 'artist_name', with: @artist.name
       click_button('Create Artist')
       expect(Artist.count).to eql(1)
       expect(Song.count).to eql(0)
+      expect(Artist.first.name).to eql(@artist.name)
+      expect(Song.first).to eql(nil)
     end
 
     it 'can create an artist with a new song' do
@@ -71,6 +70,8 @@ describe 'artist features' do
       click_button('Create Artist')
       expect(Artist.count).to eql(1)
       expect(Song.count).to eql(1)
+      expect(Artist.first.name).to eql(@artist.name)
+      expect(Song.first.name).to eql(@song.name)
     end
 
     it 'cannot create an invalid artist with a valid song' do
@@ -79,6 +80,8 @@ describe 'artist features' do
       click_button('Create Artist')
       expect(Artist.count).to eql(0)
       expect(Song.count).to eql(0)
+      expect(Artist.first).to eql(nil)
+      expect(Song.first).to eql(nil)
     end
 
     it 'cannot create an invalid artist with an invalid song' do
@@ -87,6 +90,8 @@ describe 'artist features' do
       click_button('Create Artist')
       expect(Artist.count).to eql(0)
       expect(Song.count).to eql(0)
+      expect(Artist.first).to eql(nil)
+      expect(Song.first).to eql(nil)
     end
   end
 
@@ -94,7 +99,6 @@ describe 'artist features' do
     before :each do
       @artist = Artist.create(name: 'Justin Bieber')
       @song = @artist.songs.create(name: 'Love Yourself')
-      @artist.songs.append @song
       visit "/artists/#{@artist.id}"
     end
 
@@ -118,29 +122,13 @@ describe 'artist features' do
   end
 
   describe '#destroy' do
-    before :each do
+    it 'is deleted when Destroy is clicked' do
       @artist = Artist.create(name: 'Justin Bieber')
       visit '/artists'
-    end
-
-    it 'is deleted when Destroy is clicked' do
       click_link 'Destroy'
       expect(current_path).to eql('/artists')
       expect(Artist.count).to eql(0)
-    end
-  end
-
-  describe '#create' do
-    it 'creates a valid artist' do
-      @artist = Artist.find_or_initialize_by(name: 'Justin Bieber')
-      @artist.save if @artist.in_spotify?
-      expect(Artist.count).to eql(1)
-    end
-
-    it 'does not create an invalid artist' do
-      @artist = Artist.find_or_initialize_by(name: 'abc123')
-      @artist.save if @artist.in_spotify?
-      expect(Artist.count).to eql(0)
+      expect(Artist.first).to eql(nil)
     end
   end
 end

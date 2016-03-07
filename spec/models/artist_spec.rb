@@ -6,6 +6,7 @@ describe Artist do
 
     it 'has many songs' do
       expect { @artist.songs.create name: 'Love Yourself' }.to change(Song, :count).by 1
+      #expect that artsit to have that song
     end
 
     it 'deletes associated songs' do
@@ -25,11 +26,8 @@ describe Artist do
   end
 
   describe '#artist_search' do
-    before :each do
-      @artist = Artist.create(name: 'Justin Bieber')
-    end
-
     it 'returns a properly formatted artist name for the uri' do
+      @artist = Artist.create(name: 'Justin Bieber')
       expect(@artist.artist_search).to eq('Justin+Bieber')
     end
   end

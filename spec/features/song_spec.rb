@@ -21,24 +21,28 @@ describe 'song features' do
       @song = Song.new(name: 'Love Yourself')
       @song.artist = @artist
       if @song.in_spotify?
-        @artist.songs.append @song
         @song.save
+        @artist.songs.append @song
       end
       click_button 'Create Song'
       expect(Song.count).to eql(1)
       expect(@artist.songs.count).to eql(1)
+      expect(Song.first).to eql(@song)
+      expect(@artist.songs.first).to eql(@song)
     end
 
     it 'does not create a new song if song is invalid' do
       @song = Song.new(name: '123abc')
       @song.artist = @artist
       if @song.in_spotify?
-        @artist.songs.append @song
         @song.save
+        @artist.songs.append @song
       end
       click_button 'Create Song'
       expect(Song.count).to eql(0)
       expect(@artist.songs.count).to eql(0)
+      expect(Song.first).to eql(nil)
+      expect(@artist.songs.first).to eql(nil)
     end
   end
 
@@ -59,41 +63,16 @@ describe 'song features' do
     end
   end
 
-  describe '#create' do
-    it 'creates a valid song' do
-      @artist = Artist.new(name: 'Justin Bieber')
-      @song = Song.new(name: 'Love Yourself')
-      @song.artist = @artist
-      if @song.in_spotify?
-        @artist.songs.append @song
-        @song.save
-      end
-      expect(Song.count).to eql(1)
-    end
-
-    it 'does not create an invalid song' do
-      @artist = Artist.new(name: 'Justin Bieber')
-      @song = Song.new(name: '123abc')
-      @song.artist = @artist
-      if @song.in_spotify?
-        @artist.songs.append @song
-        @song.save
-      end
-      expect(Song.count).to eql(0)
-    end
-  end
-
   describe '#destroy' do
-    before :each do
-      @song = Song.create(name: 'Love Yourself')
-      @artist = Artist.create(name: 'Justin Bieber')
-      @artist.songs.append @song
-      visit '/songs'
-    end
-
     it 'deletes the song' do
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.create(name: 'Love Yourself')
+      visit '/songs'
       click_link 'Destroy'
       expect(@artist.songs.count).to eql(0)
+      expect(@artist.songs.first).to eql(nil)
+      expect(Song.count).to eql(0)
+      expect(Song.first).to eql(nil)
       expect(current_path).to eql('/songs')
     end
   end

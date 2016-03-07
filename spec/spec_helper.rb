@@ -46,23 +46,23 @@ RSpec.configure do |config|
   end
 
   config.before(:example) do
-    @url_artist_valid = 'https://api.spotify.com/v1/search?q=Justin+Bieber&type=artist'
-    @url_song_valid = 'https://api.spotify.com/v1/search?q=Love+Yourself+Justin+Bieber&type=track'
-    @url_artist_invalid = 'https://api.spotify.com/v1/search?q=abc123&type=artist'
-    @url_song_invalid = 'https://api.spotify.com/v1/search?q=123abc+abc123&type=track'
-    @url_artist_invalid_song_valid = 'https://api.spotify.com/v1/search?q=Love+Yourself+abc123&type=track'
-    @url_artist_valid_song_invalid = 'https://api.spotify.com/v1/search?q=123abc+Justin+Bieber&type=track'
-    @valid_artist_json = File.read('spec/valid_artist.json')
-    @valid_song_json = File.read('spec/valid_song.json')
-    @invalid_artist_json = File.read('spec/invalid_artist.json')
-    @invalid_song_json = File.read('spec/invalid_song.json')
-    @invalid_artist_valid_song_json = File.read('spec/invalid_artist_valid_song.json')
-    @valid_artist_invalid_song_json = File.read('spec/valid_artist_invalid_song.json')
-    stub_request(:get, @url_artist_valid).to_return(body: @valid_artist_json)
-    stub_request(:get, @url_song_valid).to_return(body: @valid_song_json)
-    stub_request(:get, @url_artist_invalid).to_return(body: @invalid_artist_json)
-    stub_request(:get, @url_song_invalid).to_return(body: @invalid_song_json)
-    stub_request(:get, @url_artist_invalid_song_valid).to_return(body: @invalid_artist_valid_song_json)
-    stub_request(:get, @url_artist_valid_song_invalid).to_return(body: @valid_artist_invalid_song_json)
+    url_artist_valid = 'https://api.spotify.com/v1/search?q=Justin+Bieber&type=artist'
+    url_song_valid = 'https://api.spotify.com/v1/search?q=Love+Yourself+Justin+Bieber&type=track'
+    url_artist_invalid = 'https://api.spotify.com/v1/search?q=abc123&type=artist'
+    url_song_invalid = 'https://api.spotify.com/v1/search?q=123abc+abc123&type=track'
+    url_artist_invalid_song_valid = 'https://api.spotify.com/v1/search?q=Love+Yourself+abc123&type=track'
+    url_artist_valid_song_invalid = 'https://api.spotify.com/v1/search?q=123abc+Justin+Bieber&type=track'
+    valid_artist_json = File.read('spec/fixtures/valid_artist.json')
+    valid_song_json = File.read('spec/fixtures/valid_song.json')
+    invalid_artist_json = File.read('spec/fixtures/invalid_artist.json')
+    invalid_song_json = File.read('spec/fixtures/invalid_song.json')
+    invalid_artist_valid_song_json = File.read('spec/fixtures/invalid_artist_valid_song.json')
+    valid_artist_invalid_song_json = File.read('spec/fixtures/valid_artist_invalid_song.json')
+    stub_request(:get, url_artist_valid).to_return(body: valid_artist_json)
+    stub_request(:get, url_song_valid).to_return(body: valid_song_json)
+    stub_request(:get, url_artist_invalid).to_return(body: invalid_artist_json)
+    stub_request(:get, url_song_invalid).to_return(body: invalid_song_json)
+    stub_request(:get, url_artist_invalid_song_valid).to_return(body: invalid_artist_valid_song_json)
+    stub_request(:get, url_artist_valid_song_invalid).to_return(body: valid_artist_invalid_song_json)
   end
 end

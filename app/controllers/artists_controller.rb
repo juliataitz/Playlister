@@ -24,8 +24,12 @@ class ArtistsController < ApplicationController
     song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
     song.artist = @artist
     @artist.songs << song if song.in_spotify?
+    #lines 31 and 32 in this method
+    #method should return true or false
+    #method accepts artist_params (can pick if you want to pass in song_params)
 
     respond_to do |format|
+      #write if statement for calling above code 
       if @artist.in_spotify?
         @artist.save
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
@@ -40,8 +44,6 @@ class ArtistsController < ApplicationController
   # DELETE /artists/1
   # DELETE /artists/1.json
   def destroy
-    # @songs = Song.all.find_by(:artist_id => @artist.id)
-    # @songs.destroy
     @artist.destroy
     respond_to do |format|
       format.html { redirect_to artists_url, notice: 'Artist was successfully destroyed.' }
