@@ -51,4 +51,13 @@ describe Song do
       expect(@song.in_spotify?).to eql(false)    
     end
   end
+
+  describe '#spotify_uri' do
+    it 'returns the proper uri of a valid song' do
+      @song = Song.create(name: 'Love Yourself')
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.append @song
+      expect(@song.spotify_uri).to eql('spotify:track:2p7Qt540YPkuXasIaJ6Q4p')
+    end
+  end
 end
