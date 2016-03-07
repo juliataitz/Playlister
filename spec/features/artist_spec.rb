@@ -56,7 +56,7 @@ describe 'artist features' do
       expect(page).to have_field('artist_song_attributes_name')
     end
 
-    it 'can create an artist without a new song' do     
+    it 'can create an artist without a new song' do
       within(all('.field').first) do
         fill_in('Name', with: @artist.name)
       end
@@ -73,7 +73,7 @@ describe 'artist features' do
       expect(Song.count).to eql(1)
     end
 
-    it 'cannot create an invalid artist with a valid song' do 
+    it 'cannot create an invalid artist with a valid song' do
       fill_in 'artist_name', with: @artist2.name
       fill_in 'artist_song_attributes_name', with: @song.name
       click_button('Create Artist')
@@ -81,13 +81,13 @@ describe 'artist features' do
       expect(Song.count).to eql(0)
     end
 
-    it 'cannot create an invalid artist with an invalid song' do 
+    it 'cannot create an invalid artist with an invalid song' do
       fill_in 'artist_name', with: @artist2.name
       fill_in 'artist_song_attributes_name', with: @song2.name
       click_button('Create Artist')
       expect(Artist.count).to eql(0)
       expect(Song.count).to eql(0)
-    end    
+    end
   end
 
   describe '#show' do

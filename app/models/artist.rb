@@ -1,7 +1,7 @@
 class Artist < ActiveRecord::Base
   has_many :songs, dependent: :destroy
   validates :name, presence: true, uniqueness: true
-  
+
   def artist_search
     name.split(' ').join('+')
   end

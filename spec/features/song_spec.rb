@@ -80,9 +80,8 @@ describe 'song features' do
         @song.save
       end
       expect(Song.count).to eql(0)
-    end 
+    end
   end
-  
   # describe '#destroy' do
   #   before :each do
   #     @artist = Artist.create(name: 'Justin Bieber')

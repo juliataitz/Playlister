@@ -48,7 +48,7 @@ describe Song do
       @song = Song.create(name: 'Love Yourself')
       @artist = Artist.create(name: 'abc123')
       @artist.songs.append @song
-      expect(@song.in_spotify?).to eql(false)    
+      expect(@song.in_spotify?).to eql(false)
     end
   end
 

@@ -39,7 +39,7 @@ describe Artist do
       @artist = Artist.create(name: 'Justin Bieber')
       @artist2 = Artist.create(name: 'abc123')
     end
-   
+
     it 'returns true if artist is in spotify' do
       expect(@artist.in_spotify?).to eql(true)
     end
