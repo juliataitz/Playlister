@@ -28,4 +28,27 @@ describe Song do
       expect(@song.song_search).to eq('Love+Yourself+Justin+Bieber')
     end
   end
+
+  describe '#in_spotify?' do
+    it 'returns true if artist and song are in spotify' do
+      @song = Song.create(name: 'Love Yourself')
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.append @song
+      expect(@song.in_spotify?).to eql(true)
+    end
+
+    it 'returns false if artist is in spotify but song is not' do
+      @song = Song.create(name: '123abc')
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.append @song
+      expect(@song.in_spotify?).to eql(false)
+    end
+
+    it 'returns false if artist is not in spotify but song is' do
+      @song = Song.create(name: 'Love Yourself')
+      @artist = Artist.create(name: 'abc123')
+      @artist.songs.append @song
+      expect(@song.in_spotify?).to eql(false)    
+    end
+  end
 end
