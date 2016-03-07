@@ -6,22 +6,25 @@ describe Artist do
 
     it 'has many songs' do
       expect { @artist.songs.create name: 'Love Yourself' }.to change(Song, :count).by 1
-      #expect that artsit to have that song
+      expect(@artist.songs.first.name).to eql('Love Yourself')
     end
 
     it 'deletes associated songs' do
       num_songs = @artist.songs.size * -1
       expect { @artist.destroy }.to change(Song, :count).by num_songs
+      expect(@artist.songs.first).to eql(nil)
     end
   end
 
   describe 'validations' do
     it 'will not save artist without a name' do
       expect { Artist.create }.to change(Artist, :count).by 0
+      expect(Artist.first).to eql(nil)
     end
 
     it 'will save an artist with valid name' do
       expect { Artist.create(name: 'Justin Bieber') }.to change(Artist, :count).by 1
+      expect(Artist.first.name).to eql('Justin Bieber')
     end
   end
 

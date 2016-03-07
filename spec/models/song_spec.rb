@@ -10,10 +10,12 @@ describe Song do
   describe 'validations' do
     it 'will not save if there is no name' do
       expect { Song.create }.to change(Song, :count).by 0
+      expect(Song.first).to eql(nil)
     end
 
     it 'will save if there is a valid song' do
       expect { Song.create(name: 'Love Yourself') }.to change(Song, :count).by 1
+      expect(Song.first.name).to eql('Love Yourself')
     end
   end
 
@@ -51,12 +53,15 @@ describe Song do
 
   describe '#spotify_uri' do
     it 'returns the proper uri of a valid song' do
-      @song = Song.create(name: 'Love Yourself')
       @artist = Artist.create(name: 'Justin Bieber')
-      @artist.songs.append @song
-      expect(@song.spotify_uri).to eql('spotify:track:2p7Qt540YPkuXasIaJ6Q4p')
+      @artist.songs.create(name: 'Love Yourself')
+      expect(@artist.songs.first.spotify_uri).to eql('spotify:track:2p7Qt540YPkuXasIaJ6Q4p')
     end
-    
-    #it returns an error with an invalid song - return nil
+
+    it 'returns nil for invalid song' do
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.create(name: '123abc')
+      expect(@artist.songs.first.spotify_uri).to eql(nil)
+    end
   end
 end
