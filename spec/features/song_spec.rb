@@ -82,18 +82,19 @@ describe 'song features' do
       expect(Song.count).to eql(0)
     end
   end
-  # describe '#destroy' do
-  #   before :each do
-  #     @artist = Artist.create(name: 'Justin Bieber')
-  #     @song = Song.create(name: 'Love Yourself')
-  #     @song.artist = @artist
-  #     visit '/songs'
-  #   end
 
-  #   it 'deletes the song' do
-  #     click_link 'Destroy'
-  #     expect(@artist.songs.count).to eql(0)
-  #     expect(current_path).to eql('/songs')
-  #   end
-  # end
+  describe '#destroy' do
+    before :each do
+      @song = Song.create(name: 'Love Yourself')
+      @artist = Artist.create(name: 'Justin Bieber')
+      @artist.songs.append @song
+      visit '/songs'
+    end
+
+    it 'deletes the song' do
+      click_link 'Destroy'
+      expect(@artist.songs.count).to eql(0)
+      expect(current_path).to eql('/songs')
+    end
+  end
 end
