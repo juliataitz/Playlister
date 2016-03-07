@@ -1,11 +1,20 @@
 describe 'artist features' do
   describe '#index' do
     before :each do
-      visit "/artists"
       @artist = Artist.create(name: 'Justin Bieber')
+      visit '/artists'
+    end
+
+    it 'loads the page successfully' do
+      expect(status_code).to eql(200)
+    end
+
+    it 'renders the right page' do
+      expect(page).to have_text('Listing Artists')
     end
 
     it 'lists all artists' do
+      visit '/artists'
       expect(page).to have_text(@artist.name)
     end
 
@@ -25,14 +34,16 @@ describe 'artist features' do
 
     it 'links to the destroy page' do
       click_link 'Destroy'
-      expect(current_path).to eql("/artists/#{@artist.id}/destroy")
+      expect(current_path).to eql('/artists')
     end
   end
 
   describe '#new' do
     before :each do
-      @artist = Artist.create(name: 'Justin Bieber')
-      @song = Song.create(name: 'Baby')
+      @artist = Artist.new(name: 'Justin Bieber')
+      @song = Song.new(name: 'Love Yourself')
+      @artist2 = Artist.new(name: 'abc123')
+      @song2 = Song.new(name: '123abc')
       visit '/artists/new'
     end
 
@@ -42,40 +53,48 @@ describe 'artist features' do
 
     it 'has the name fields for song and artist' do
       expect(page).to have_field('artist_name')
-      expect(page).to have_field('song_name')
+      expect(page).to have_field('artist_song_attributes_name')
     end
 
-    it 'creates a new artist' do
-      click_button 'Create Artist'
+    it 'can create an artist without a new song' do     
+      within(all('.field').first) do
+        fill_in('Name', with: @artist.name)
+      end
+      click_button('Create Artist')
       expect(Artist.count).to eql(1)
+      expect(Song.count).to eql(0)
     end
 
-    it 'can create an artist without a new song' do
-      visit 'artists/new'
-      within(all('.field').first) do
-        fill_in('Name', with: @artist.name)
-      end
-      click_button('Create Post')
-      expect(page).to have_content(@artist.name)
-    end
-
-    it 'can create an artist with a new song' do 
-      visit 'artists/new'
-      within(all('.field').first) do
-        fill_in('Name', with: @artist.name)
-      end
-      within(all('.field').last) do
-        fill_in('Name', with: @song.name)
-      end
-      click_button('Create Post')
+    it 'can create an artist with a new song' do
+      fill_in 'artist_name', with: @artist.name
+      fill_in 'artist_song_attributes_name', with: @song.name
+      click_button('Create Artist')
+      expect(Artist.count).to eql(1)
       expect(Song.count).to eql(1)
     end
+
+    it 'cannot create an invalid artist with a valid song' do 
+      fill_in 'artist_name', with: @artist2.name
+      fill_in 'artist_song_attributes_name', with: @song.name
+      click_button('Create Artist')
+      expect(Artist.count).to eql(0)
+      expect(Song.count).to eql(0)
+    end
+
+    it 'cannot create an invalid artist with an invalid song' do 
+      fill_in 'artist_name', with: @artist2.name
+      fill_in 'artist_song_attributes_name', with: @song2.name
+      click_button('Create Artist')
+      expect(Artist.count).to eql(0)
+      expect(Song.count).to eql(0)
+    end    
   end
 
   describe '#show' do
     before :each do
       @artist = Artist.create(name: 'Justin Bieber')
-      @song = @artist.songs.create(name: 'Baby')
+      @song = @artist.songs.create(name: 'Love Yourself')
+      @artist.songs.append @song
       visit "/artists/#{@artist.id}"
     end
 
@@ -88,20 +107,39 @@ describe 'artist features' do
     end
 
     it 'lists the artist\'s songs' do
-      expect(page).to have_text(@song.name)
+      expect(page).to have_selector('iframe')
     end
 
-    it 'has New Song link' do
+    it 'has new song link' do
       expect(page).to have_text('New Song')
-      click_link 'New Status'
-      expect(current_path).to eql('artists/#{@artist.id}/songs/new')
+      click_link 'New Song'
+      expect(current_path).to eql("/artists/#{@artist.id}/songs/new")
     end
   end
+
   describe '#destroy' do
+    before :each do
+      @artist = Artist.create(name: 'Justin Bieber')
+      visit '/artists'
+    end
+
     it 'is deleted when Destroy is clicked' do
-      artist = Artist.create(name: 'Justin Bieber')
-      click_link 'Destroy', href: "/artists/#{artist.id}"
+      click_link 'Destroy'
       expect(current_path).to eql('/artists')
+      expect(Artist.count).to eql(0)
+    end
+  end
+
+  describe '#create' do
+    it 'creates a valid artist' do
+      @artist = Artist.find_or_initialize_by(name: 'Justin Bieber')
+      @artist.save if @artist.in_spotify?
+      expect(Artist.count).to eql(1)
+    end
+
+    it 'does not create an invalid artist' do
+      @artist = Artist.find_or_initialize_by(name: 'abc123')
+      @artist.save if @artist.in_spotify?
       expect(Artist.count).to eql(0)
     end
   end

@@ -53,9 +53,9 @@ group :development do
 end
 
 group :test do
-	gem 'rspec'
-	gem 'capybara'
-	gem 'webmock'
-	gem 'database_cleaner'
+  gem 'rspec'
+  gem 'capybara'
+  gem 'webmock'
+  gem 'database_cleaner'
   gem 'rspec-rails'
 end
