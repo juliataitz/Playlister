@@ -3,7 +3,7 @@ PlaylisterApp::Application.routes.draw do
     resources :songs, except: [:edit, :update]
   end
   get '/songs', to: 'songs#all'
-  root 'static_pages#home'
+  root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
