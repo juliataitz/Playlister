@@ -21,17 +21,8 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
-    song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
-    song.artist = @artist
-    @artist.songs << song if song.in_spotify?
-    #lines 31 and 32 in this method
-    #method should return true or false
-    #method accepts artist_params (can pick if you want to pass in song_params)
-
     respond_to do |format|
-      #write if statement for calling above code 
-      if @artist.in_spotify?
-        @artist.save
+      if @artist.check_song(artist_params) && @artist.save
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
         format.json { render :show, status: :created, location: @artist }
       else

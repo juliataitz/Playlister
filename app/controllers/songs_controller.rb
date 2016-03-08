@@ -25,14 +25,10 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    artist = Artist.find_or_create_by(id: params[:artist_id])
     @song = Song.new(name: song_params[:name])
-    @song.artist = artist
     respond_to do |format|
-      if @song.in_spotify?
-        @song.save
-        artist.songs.append @song
-        format.html { redirect_to artist_songs_path(artist.id), notice: 'Song was successfully created.' }
+      if @song.check_song(params) && @song.save
+        format.html { redirect_to artist_songs_path(@song.artist.id), notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
         format.html { redirect_to new_artist_song_path, notice: 'Invalid Song' }
