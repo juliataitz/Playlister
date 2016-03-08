@@ -64,4 +64,29 @@ describe Song do
       expect(@artist.songs.first.spotify_uri).to eql(nil)
     end
   end
+
+  describe '#check_song' do
+    before :each do
+      @song = Song.new(name: 'Love Yourself')
+      @song2 = Song.new(name: '123abc')
+      @artist = Artist.create(name: 'Justin Bieber')
+      @params = {utf8: '',
+                authenticity_token: '',
+                song: {name: ''},
+                commit: "Create Song",
+                controlle: "songs",
+                action: "create",
+                artist_id: 1}
+    end
+    
+    it 'returns true if a valid song is made with a valid artist' do
+      expect(@song.check_song(@params)).to eql(true)
+      expect(Song.last.name).to eql (@song.name)
+    end
+
+    it 'returns false if an invalid song is made with a valid artist' do
+      expect(@song2.check_song(@params)).to eql(false)
+      expect(Song.last).to eql(nil)
+    end
+  end
 end

@@ -35,6 +35,9 @@ Artist should be instantiated by being passed a name. Artist should have validat
 #### artist_search
 `Artist` should have a method named `artist_search` that will format an artist name so that it can be used with the Spotify URI. Artist names should be formatted by inserting `+` instead of spaces.
 
+#### check_song
+`Artist` should have a method named `check_song` that takes in `artist_params`. This is a helper method for `create`. This method will be called on an instance of artist in the controller. In this method, you should you should find or initialize a song from  `song_attributes` within `artist params`. Then add set the artist of the song to the current artist and add the song to the the artist's `songs` if the song is `in_spotify`. Check if the current artist is `in_spotify?` and save it and return `true`. Otherwise this methd should return  `false`.
+
 ### song.rb
 `Song` should be instantiated by being passed a name. Song should validate the song name using the Spotify API and the method `in_spotify?`. If the song is not valid, a song should not be created. The song should belong to an artist. Since we want to make nested resouces for songs, songs should only be able to be created from an artist `show` page. When a song is destroyed, the artist it belongs to should not be destroyed. 
 
@@ -46,6 +49,9 @@ Artist should be instantiated by being passed a name. Artist should have validat
 
 #### get_spotify_uri
 `Song` should have a method `get_spotify_uri` that will use the return value from `song_search` and properly parse through the JSON from Spotify. You will want to get the song information by using the type track and pulling the first URI from the first item. To get the proper information, iterate through the `JSON` from `tracks` to `items` to `1` to `uri`.
+
+#### check_song
+`Song` should have a method named `check_song` that takes in `params`. This is a helper method for `create`. This method will be called on an instance of song in the controller. In this method, you should find or create an artist based on `artist_id` within params. Set the artist of the song equal to the artist you just found or created. Check if the current song is `in_spotify`. If the song is valid, save the song, append the current song to the songs of the artist, and return `true`. Otherwise this method should return `false`.
 
 ### Spotify URI
 Spotify players can be embedded into `erb` files by using `iframe` with specific sources. To specifically access Spotify information, you will want to use the general url: `https://embed.spotify.com/?uri=`. At the end of this link, you will want to interpolate the result of `get_spotify_uri`.

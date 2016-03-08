@@ -23,14 +23,12 @@ class Song < ActiveRecord::Base
 
   def check_song(params)
     artist = Artist.find_or_create_by(id: params[:artist_id])
-    if name != ''
-      self.artist = artist
+    self.artist = artist
+    if in_spotify?
+      save
       artist.songs.append self
-      if in_spotify?
-        save
-        return true
-      end
-      return false
+      return true
     end
+    return false
   end
 end

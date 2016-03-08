@@ -49,4 +49,53 @@ describe Artist do
       expect(@artist2.in_spotify?).to eql(false)
     end
   end
+
+  describe '#check_song' do
+    before :each do
+      @artist = Artist.new(name: 'Justin Bieber')
+      @artist2 = Artist.new(name: 'abc123')
+      @params = {name: 'Justin Bieber', song_attributes: {name: ''}}
+      @params2 = {name: 'Justin Bieber', song_attributes: {name: 'Love Yourself'}}
+      @params3 = {name: 'Justin Bieber', song_attributes: {name: '123abc'}}
+      @params4 = {name: 'abc123', song_attributes: {name: ''}}
+      @params5 = {name: 'abc123', song_attributes: {name: 'Love Yourself'}}
+      @params6 = {name: 'abc123', song_attributes: {name: '123abc'}}
+    end
+
+    it 'returns true and saves if an artist is valid and has no song' do
+      expect(@artist.check_song(@params)).to eql(true)
+      expect(Artist.last.name).to eql(@params[:name])
+      expect(Song.last).to eql(nil)
+    end
+
+    it 'returns true and saves if an artist is valid and a song is valid' do
+      expect(@artist.check_song(@params2)).to eql(true)
+      expect(Artist.last.name).to eql(@params2[:name])
+      expect(Song.last.name).to eql(@params2[:song_attributes][:name])
+    end
+
+    it 'returns true and saves if an artist is valid and a song is invalid' do
+      expect(@artist.check_song(@params3)).to eql(true)
+      expect(Artist.last.name).to eql(@params2[:name])
+      expect(Song.last).to eql(nil)
+    end
+
+    it 'returns false and does not save if an artist is invalid and has no song' do
+      expect(@artist2.check_song(@params4)).to eql(false)
+      expect(Artist.last).to eql(nil)
+      expect(Song.last).to eql(nil)
+    end
+
+    it 'returns false and does not save if an artist is invalid and has a valid song' do
+      expect(@artist2.check_song(@params5)).to eql(false)
+      expect(Artist.last).to eql(nil)
+      expect(Song.last).to eql(nil)
+    end
+
+    it 'returns false and does not save if an artist is invalid and has an invalid song' do
+      expect(@artist2.check_song(@params6)).to eql(false)
+      expect(Artist.last).to eql(nil)
+      expect(Song.last).to eql(nil)
+    end
+  end
 end
