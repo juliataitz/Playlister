@@ -22,7 +22,7 @@ class ArtistsController < ApplicationController
   def create
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
     respond_to do |format|
-      if @artist.check_song(artist_params)
+      if @artist.add_song(artist_params)
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
         format.json { render :show, status: :created, location: @artist }
       else

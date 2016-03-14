@@ -17,10 +17,11 @@ class Artist < ActiveRecord::Base
     song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
     song.artist = self
     songs << song if song.in_spotify?
-    if in_spotify?
-      save
-      return true
-    end
+    save_artist
+  end
+
+  def save_artist
+    return save if in_spotify?
     false
   end
 end
