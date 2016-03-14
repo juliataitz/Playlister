@@ -16,19 +16,17 @@ class Song < ActiveRecord::Base
     return false if name.empty?
     data = JSON.load(open("https://api.spotify.com/v1/search?q=#{song_search}&type=track"))
     song_data = data['tracks']
-    # store song_data in database
-    # use or equals to check if its actually there
     !song_data['items'].empty?
   end
 
-  def check_song(params)
-    artist = Artist.find_or_create_by(id: params[:artist_id])
+  def add_artist(song_params)
+    artist = Artist.find_or_create_by(id: song_params[:artist_id])
     self.artist = artist
     if in_spotify?
       save
       artist.songs.append self
       return true
     end
-    return false
+    false
   end
 end

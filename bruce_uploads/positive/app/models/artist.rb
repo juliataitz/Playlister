@@ -13,7 +13,7 @@ class Artist < ActiveRecord::Base
     !artist_data['items'].empty?
   end
 
-  def check_song(artist_params)
+  def add_song(artist_params)
     song = Song.find_or_initialize_by(name: artist_params[:song_attributes][:name])
     song.artist = self
     songs << song if song.in_spotify?
