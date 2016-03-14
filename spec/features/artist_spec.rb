@@ -123,7 +123,7 @@ describe 'artist features' do
 
   describe '#destroy' do
     it 'is deleted when Destroy is clicked' do
-      @artist = Artist.create(name: 'Justin Bieber')
+      Artist.create(name: 'Justin Bieber')
       visit '/artists'
       click_link 'Destroy'
       expect(current_path).to eql('/artists')
