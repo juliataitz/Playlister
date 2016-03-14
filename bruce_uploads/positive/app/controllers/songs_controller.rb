@@ -27,7 +27,7 @@ class SongsController < ApplicationController
   def create
     @song = Song.new(name: song_params[:name])
     respond_to do |format|
-      if @song.add_artist(params)
+      if @song.add_artist(song_params)
         format.html { redirect_to artist_songs_path(@song.artist.id), notice: 'Song was successfully created.' }
         format.json { render action: 'show', status: :created, location: @song }
       else
@@ -56,6 +56,6 @@ class SongsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def song_params
-    params.require(:song).permit(:name)
+    params.require(:song).permit(:name, :artist_id)
   end
 end
