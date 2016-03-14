@@ -57,13 +57,19 @@ A `song` should have a method named `add_artist` that takes in `song_params`. Th
 Spotify players can be embedded into `erb` files by using `iframe` with specific sources. To specifically access Spotify information, you will want to use the general url: `https://embed.spotify.com/?uri=`. At the end of this link, you will want to interpolate the result of `get_spotify_uri`.
 
 ### Routes
-You should make `Song` a nested resource of `Artist`. This means you should update your `routes` so that a song can be accessed only through the provided artist. Make sure you created nested routes in your `routes.rb` file. In addition, you should not be able to `update` or `edit` songs and artists. You should make this respective changes in your controllers and `routes.rb`.
+You should make `Song` a nested resource of `Artist`. This means you should update your `routes` so that a song can be accessed only through the provided artist. Make sure you created nested routes in your `routes.rb` file. In addition, you should not be able to `update` or `edit` songs and artists. You should make this respective changes in your controllers and `routes.rb`. Also, you should create a new route in the `SongsController` where the `all` action handles a GET request to /songs.
 
 ### Controllers
 You should generate `ArtistController` and `SongController` with full REST, except for the `update` and `edit` actions.
 
 ### Views
-The views were provided to you completely intact. Reference them for variable naming and to see how data are passed between the client and the server.
+The views were provided to you almost completely intact. You will only have to write the `_form` files for both `artist` and `song`. Reference them for variable naming and to see how data are passed between the client and the server.
+
+#### Artist Form
+Since a song can only be made through an artist, you will need to write a nested form. There should be a text area for `name` for the artist. In addition, you will need a field for `song_attributes` and `song_name`. This will require you to iterate over `song_attributes`. When creating this form, be mindful of the paths you are using for the nested attributes.
+
+#### Song Form
+This form is not as complicated as `artist` because it only accepts a `name` field for song. However, make sure you remember that the form can be used for a new song and the song from the artist.
 
 ### Uploading
 To submit your homework, zip your `app`, `db`, and `config` directories into a file called `files.zip`. copy and paste this command exactly since naming it anything else will not work `zip -r files.zip app`.
