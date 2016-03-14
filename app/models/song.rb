@@ -19,8 +19,8 @@ class Song < ActiveRecord::Base
     !song_data['items'].empty?
   end
 
-  def add_artist(params)
-    artist = Artist.find_or_create_by(id: params[:artist_id])
+  def add_artist(song_params)
+    artist = Artist.find_or_create_by(id: song_params[:artist_id])
     self.artist = artist
     if in_spotify?
       save
