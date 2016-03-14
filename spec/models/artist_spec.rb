@@ -54,7 +54,7 @@ describe Artist do
     before :each do
       @artist = Artist.new(name: 'Justin Bieber')
       @artist2 = Artist.new(name: 'abc123')
-      @params = { name: 'Justin Bieber', song_attributes: { name: '' } }
+      @params_valid_artist = { name: 'Justin Bieber', song_attributes: { name: '' } }
       @params_valid_artist_valid_song = { name: 'Justin Bieber', song_attributes: { name: 'Love Yourself' } }
       @params_valid_artist_invalid_song = { name: 'Justin Bieber', song_attributes: { name: '123abc' } }
       @params_invalid_artist = { name: 'abc123', song_attributes: { name: '' } }
@@ -63,8 +63,8 @@ describe Artist do
     end
 
     it 'returns true and saves if an artist is valid and has no song' do
-      expect(@artist.add_song(@params)).to eql(true)
-      expect(Artist.last.name).to eql(@params[:name])
+      expect(@artist.add_song(@params_valid_artist)).to eql(true)
+      expect(Artist.last.name).to eql(@params_valid_artist[:name])
       expect(Song.last).to eql(nil)
     end
 

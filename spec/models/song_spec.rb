@@ -7,7 +7,7 @@ describe Song do
       expect(song.artist).to eq(artist)
     end
   end
-  
+
   describe 'validations' do
     it 'will not save if there is no name' do
       expect { Song.create }.to change(Song, :count).by 0
