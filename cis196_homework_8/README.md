@@ -72,4 +72,4 @@ Since a song can only be made through an artist, you will need to write a nested
 This form is not as complicated as `artist` because it only accepts a `name` field for song. However, make sure you remember that the form can be used for a new song and the song from the artist.
 
 ### Uploading
-To submit your homework, zip your `app`, `db`, and `config` directories into a file called `files.zip`. copy and paste this command exactly since naming it anything else will not work `zip -r files.zip app`.
+To submit your homework, zip your `app`, `db`, and `config` directories into a file called `files.zip`. copy and paste this command exactly since naming it anything else will not work `zip -r files.zip app db config`.
