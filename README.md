@@ -24,7 +24,7 @@ You will create models for `Artist` and `Song`. These models will have basic val
 `gem install bundler` if you haven’t already and run the `bundle` command. This will install all gems listed in your `Gemfile`.
 
 ### Spotify API
-For this homework, we will being using the Spotify API. Spotify provides us with JSON data to access and embedded all songs and artists within its library. Before you start this assignment, familiarize yourself with the API by exploring `https://developer.spotify.com/web-api/get-track/`. When you want JSON for a specific artist, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+ARTIST&type=artist` where you provide the specific artist name. When you want JSON for a specific song, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+ARTIST+SOME+SONG&type=track` where you provide the specif artist name and song name. To access the JSON data as a hash, call `JSON.load`, and pass it `open(url)`, where url is the url you want to access as a string.
+For this homework, we will being using the Spotify API. Spotify provides us with JSON data to access and embedded all songs and artists within its library. Before you start this assignment, familiarize yourself with the API by exploring `https://developer.spotify.com/web-api/get-track/`. When you want JSON for a specific artist, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+ARTIST&type=artist` where you provide the specific artist name. When you want JSON for a specific song, you can access this information by following the general format `https://api.spotify.com/v1/search?q=SOME+SONG+SOME+ARTIST&type=track` where you provide the specif artist name and song name. To access the JSON data as a hash, call `JSON.load`, and pass it `open(url)`, where url is the url you want to access as a string.
 
 ### artist.rb
 Artist should be instantiated by being passed a name. Artist should have validated the artist name using the Spotify API with the `in_spotify?` method. If the artist is not valid, the artist should not be created. The artist should have many songs. When an artist is destroyed, all songs belonging to the artist should be destroyed. You should be able to create an artist with an empty song field.
@@ -47,20 +47,20 @@ A `song` should also have a method named `in_spotify?` that will check for a val
 #### song_search
 A `song` should have a method named `song_search` that will format an artist name so that it can be used with the Spotify URI. Song names and artist name should be formatted by inserting `+` instead of spaces.
 
-#### get_spotify_uri
-A `song` should have a method `get_spotify_uri` that will use the return value from `song_search` and properly parse through the JSON from Spotify. You will want to get the song information by using the type track and pulling the first URI from the first item. To get the proper information, iterate through the `JSON` from `tracks` to `items` to `1` to `uri`.
+#### spotify_uri
+A `song` should have a method `spotify_uri` that will use the return value from `song_search` and properly parse through the JSON from Spotify. You will want to get the song information by using the type track and pulling the first URI from the first item. To get the proper information, iterate through the `JSON` from `tracks` to `items` to `1` to `uri`.
 
 #### add_artist
 A `song` should have a method named `add_artist` that takes in `song_params`. This is a helper method for `create`. This method will be called on an instance of song in the controller. In this method, you should find or create an artist based on `artist_id` within params. Set the artist of the song equal to the artist you just found or created. Check if the current song is `in_spotify?`. If the song is valid, save the song as one of the artist's songs and return `true`. Otherwise, this method should return `false`.
 
 ### Spotify URI
-Spotify players can be embedded into `erb` files by using `iframe` with specific sources. To specifically access Spotify information, you will want to use the general url: `https://embed.spotify.com/?uri=`. At the end of this link, you will want to interpolate the result of `get_spotify_uri`.
+Spotify players can be embedded into `erb` files by using `iframe` with specific sources. To specifically access Spotify information, you will want to use the general url: `https://embed.spotify.com/?uri=`. At the end of this link, you will want to interpolate the result of `spotify_uri`.
 
 ### Routes
 You should make `Song` a nested resource of `Artist`. This means you should update your `routes` so that a song can be accessed only through the provided artist. Make sure you created nested routes in your `routes.rb` file. In addition, you should not be able to `update` or `edit` songs and artists. You should make this respective changes in your controllers and `routes.rb`. Also, you should create a new route in the `SongsController` where the `all` action handles a GET request to /songs.
 
 ### Controllers
-You should generate `ArtistController` and `SongController` with full REST, except for the `update` and `edit` actions.
+You should generate `ArtistsController` and `SongsController` with full REST, except for the `update` and `edit` actions.
 
 ### Views
 The views were provided to you almost completely intact. You will only have to write the `_form` files for both `artist` and `song`. Reference them for variable naming and to see how data are passed between the client and the server.
