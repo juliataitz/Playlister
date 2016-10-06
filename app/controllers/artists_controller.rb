@@ -21,7 +21,6 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.find_or_initialize_by(name: artist_params[:name])
-    binding.pry
     respond_to do |format|
       if @artist.add_song(artist_params)
         format.html { redirect_to @artist, notice: 'Artist was successfully created.' }
